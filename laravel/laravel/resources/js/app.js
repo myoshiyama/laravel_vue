@@ -1,26 +1,13 @@
 require('./bootstrap');
 
-import VueRouter from "vue-router";
-import router from "./routes";
-
 import { createApp } from 'vue';
-// const Vue = require("vue");
-// import App from './App.vue'
+import Top from "./Top.vue";
+import router from "./routes";
+// import moment from "moment";
+// import StarRating from "./shared/components/StarRating.vue";
 
-const app = createApp({})
-app.use(router)
-app.mount('#app')
+createApp(Top).use(router).mount('#app');
 
+// app.use("fromNow", value => moment(value).fromNow());
 
-
-// window.Vue = Vue;
-
-// Vue.component("example-component", require("./components/ExampleComponent.vue").default);
-
-// Vue.use(VueRouter);
-
-
-// const app = new Vue({
-//     el: "#app",
-//     router,
-// });
+// Top.component("star-rating", StarRating);

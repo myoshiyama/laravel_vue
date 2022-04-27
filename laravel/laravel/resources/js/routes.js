@@ -1,18 +1,24 @@
 import { createWebHistory, createRouter } from "vue-router";
-import ExampleComponent from "./components/ExampleComponent.vue";
-import Example2 from "./components/Example2.vue";
+import Bookables from "./bookables/Bookables";
+import Bookable from "./bookable/Bookable";
+import Review from "./review/Review";
 
 const routes = [
   {
     path: "/",
-    name: "ExampleComponent",
-    component: ExampleComponent,
+    component: Bookables,
+    name: "home",
   },
   {
-    path: "/about",
-    name: "Example2",
-    component: Example2,
+    path: "/bookable/:id",
+    component: Bookable,
+    name: "bookable",
   },
+  {
+    path: "/review/:id",
+    component: Review,
+    name: "review"
+  }
 ];
 
 const router = createRouter({
@@ -21,34 +27,3 @@ const router = createRouter({
 });
 
 export default router;
-
-// import Vue from "vue";
-// const Vue = require("vue");
-// import VueRouter from "vue-router";
-
-// import ExampleComponent from "./components/ExampleComponent.vue";
-// import Example2 from "./components/Example2.vue";
-
-// // Vue.use(VueRouter);
-
-// const routes = [
-//     {
-//         path: "/",
-//         component: ExampleComponent,
-//         name:"home",
-//     },
-//     {
-//         path: "/second",
-//         component: Example2,
-//         name:"second",
-//     },
-// ];
-
-// const router = new VueRouter({
-//     routes,
-//     mode:"history",
-// });
-
-// console.log("hello");
-
-// export default router;
