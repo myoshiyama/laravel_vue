@@ -15,7 +15,8 @@
 
     <body>
         <div id="app">
-            <router-view></router-view>
+            <top-view></top-view>
+            <!-- <router-view></router-view> -->
         </div>
     </body>
 </html>

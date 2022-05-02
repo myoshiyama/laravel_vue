@@ -25,8 +25,10 @@ class AddReviewKeyToBookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('bookings', function (Blueprint $table) {
-            $table->dropColumn('review_key');
-        });
+        if (Schema::hasColumn('bookings', 'review_key')) {
+              Schema::table('bookings', function (Blueprint $table) {
+                $table->dropColumn('review_key');
+              });
+            }
     }
 }
