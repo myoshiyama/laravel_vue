@@ -13,6 +13,8 @@ import ValidationErrors from "./shared/components/ValidationErrors";
 
 // createApp(Top).use(router).mount('#app');
 
+const store = createStore({ storeDefinition });
+
 const app = createApp({Top})
 app.use(router);
 app.use(store);
@@ -22,24 +24,7 @@ app.component("fatal-error", FatalError);
 app.component("v-errors", ValidationErrors);
 app.mount("#app");
 
-const store = new vuex.Store(storeDefinition);
 
-// const store = createStore({
-//     state() {
-//         return {
-//           count: 0,
-//           name: "John"
-//         }
-//     },
-//     mutations: {
-//       increment(state) {
-//         state.count++;
-//       },
-//       changeNmae(state, payload) {
-//           state.name = payload;
-//       }
-//     }
-// });
 
 
 // app.use("fromNow", value => moment(value).fromNow());

@@ -62,6 +62,8 @@ export default {
             this.loading = true;
             this.errors = null;
 
+            console.log(this.$store);
+
             axios
                 .get(
                     `/api/bookables/${this.bookableId}/availability?from=${this.from}&to=${this.to}`
