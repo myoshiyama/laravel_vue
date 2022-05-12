@@ -13,15 +13,16 @@ import ValidationErrors from "./shared/components/ValidationErrors";
 
 // createApp(Top).use(router).mount('#app');
 
-const store = createStore({ storeDefinition });
+const store = createStore( storeDefinition );
 
-const app = createApp({Top})
+const app = createApp({Top});
 app.use(router);
 app.use(store);
 app.component("top-view", Top);
 app.component("success", Success);
 app.component("fatal-error", FatalError);
 app.component("v-errors", ValidationErrors);
+// app.beforeCreate(store.dispatch("loadStoredState"));
 app.mount("#app");
 
 
