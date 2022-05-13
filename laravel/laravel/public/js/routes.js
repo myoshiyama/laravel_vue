@@ -18030,13 +18030,7 @@ var _hoisted_1 = {
   "class": "row"
 };
 
-var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "col-md-8"
-  }, "Check form", -1
-  /* HOISTED */
-  );
-});
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"col-md-8\" data-v-9d55657e><div class=\"row\" data-v-9d55657e><div class=\"col-md-6 form-group\" data-v-9d55657e><label for=\"first_names\" data-v-9d55657e>First names</label><input type=\"text\" class=\"form-control\" name=\"first_names\" data-v-9d55657e></div><div class=\"col-md-6 form-group\" data-v-9d55657e><label for=\"last_name\" data-v-9d55657e>Last name</label><input type=\"text\" class=\"form-control\" name=\"last_name\" data-v-9d55657e></div></div><div class=\"row\" data-v-9d55657e><div class=\"col-md-12 form-group\" data-v-9d55657e><label for=\"email\" data-v-9d55657e>Email</label><input type=\"text\" class=\"form-control\" name=\"email\" data-v-9d55657e></div></div><div class=\"row\" data-v-9d55657e><div class=\"col-md-6 form-group\" data-v-9d55657e><label for=\"street\" data-v-9d55657e>Street</label><input type=\"text\" class=\"form-control\" name=\"street\" data-v-9d55657e></div><div class=\"col-md-6 form-group\" data-v-9d55657e><label for=\"city\" data-v-9d55657e>City</label><input type=\"text\" class=\"form-control\" name=\"city\" data-v-9d55657e></div></div><div class=\"row\" data-v-9d55657e><div class=\"col-md-6 form-group\" data-v-9d55657e><label for=\"country\" data-v-9d55657e>Country</label><input type=\"text\" class=\"form-control\" name=\"country\" data-v-9d55657e></div><div class=\"col-md-4 form-group\" data-v-9d55657e><label for=\"state\" data-v-9d55657e>State</label><input type=\"text\" class=\"form-control\" name=\"state\" data-v-9d55657e></div><div class=\"col-md-2 form-group\" data-v-9d55657e><label for=\"zip\" data-v-9d55657e>Zip</label><input type=\"text\" class=\"form-control\" name=\"zip\" data-v-9d55657e></div></div><hr data-v-9d55657e><div class=\"row\" data-v-9d55657e><div class=\"col-md-12 form-group\" data-v-9d55657e><button type=\"submit\" class=\"btn btn-lg btn-primary btn-block\" data-v-9d55657e>Book now!</button></div></div></div>", 1);
 
 var _hoisted_3 = {
   "class": "col-md-4"
@@ -18090,44 +18084,53 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h6", _hoisted_6, [_ctx.itemsInBasket ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_7, "Items " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.itemsInBasket), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, "空"))])]), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.basket, function (item) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
-      key: item.bookable.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
-      to: {
-        name: 'bookable',
-        params: {
-          id: item.bookable.id
-        }
-      }
-    }, {
-      "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-        return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.bookable.title), 1
-        /* TEXT */
-        )];
-      }),
-      _: 2
-      /* DYNAMIC */
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_8, "空"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.TransitionGroup, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.basket, function (item) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          key: item.bookable.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_router_link, {
+          to: {
+            name: 'bookable',
+            params: {
+              id: item.bookable.id
+            }
+          }
+        }, {
+          "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+            return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.bookable.title), 1
+            /* TEXT */
+            )];
+          }),
+          _: 2
+          /* DYNAMIC */
 
-    }, 1032
-    /* PROPS, DYNAMIC_SLOTS */
-    , ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price.total), 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "From " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.dates.from), 1
-    /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "To " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.dates.to), 1
-    /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-      "class": "btn btn-sm btn-outline-secondary",
-      onClick: function onClick($event) {
-        return _ctx.$store.dispatch('removeFromBasket', item.bookable.id);
-      }
-    }, _hoisted_15, 8
-    /* PROPS */
-    , _hoisted_13)])]);
-  }), 128
-  /* KEYED_FRAGMENT */
-  ))])])]);
+        }, 1032
+        /* PROPS, DYNAMIC_SLOTS */
+        , ["to"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_10, "$" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.price.total), 1
+        /* TEXT */
+        )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "From " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.dates.from), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "To " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.dates.to), 1
+        /* TEXT */
+        )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+          "class": "btn btn-sm btn-outline-secondary",
+          onClick: function onClick($event) {
+            return _ctx.$store.dispatch('removeFromBasket', item.bookable.id);
+          }
+        }, _hoisted_15, 8
+        /* PROPS */
+        , _hoisted_13)])]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))];
+    }),
+    _: 1
+    /* STABLE */
+
+  })])])]);
 }
 
 /***/ }),
