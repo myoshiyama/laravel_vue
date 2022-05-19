@@ -6,15 +6,15 @@ use App\Bookable;
 use Faker\Generator as Faker;
 
 $suffix = [
-    'Villa',
-    'House',
-    'Cottage',
-    'Luxury Villas',
-    'Cheap House',
-    'Rooms',
-    'Cheap Rooms',
-    'Luxury Rooms',
-    'Fancy Rooms'
+    'ホテル',
+    '旅館',
+    'コテージ',
+    'キャンプ場',
+    'bnb',
+    '小部屋',
+    '大部屋',
+    '中部屋',
+    '宴会場'
 ];
 
 $factory->define(Bookable::class, function (Faker $faker) use($suffix) {

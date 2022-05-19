@@ -6,7 +6,7 @@
             <div :class="[{'col-md-4': twoColumns}, {'d-none': oneColumn}]">
                 <div class="card">
                     <div class="card-body">
-                        <div v-if="loading">Loading...</div>
+                        <div v-if="loading">読み込み中...</div>
                         <div v-if="hasBooking">
                             <p>
                                 Stayed at 

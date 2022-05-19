@@ -8,7 +8,7 @@
                         <hr />
                         <article>{{ bookable.description }}</article>
                     </div>
-                    <div v-else>Loading...</div>
+                    <div v-else>読み込み中...</div>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                     v-if="price" 
                     @click="addToBasket" 
                     :disabled="inBasketAlready"
-                >Book Now</button>
+                >カートに入れる</button>
             </transition>
 
             <button 
@@ -40,12 +40,12 @@
                 class="btn btn-outline-secondary btn-block" 
                 v-if="inBasketAlready" 
                 @click="removeFromBasket"
-            >Remove from basket</button>
+            >カートから出す</button>
 
             <div
                 v-if="inBasketAlready"
                 class="mt-4 text-muted warning"
-            >すでにこの本をカゴに追加したようですが、日付を変更したい場合ははじめにカゴから移してください。</div>
+            >すでにこの本をカゴに追加したようですが、日付を変更したい場合はカートから出し日付を変更した上で再度カートに入れてください。</div>
         </div>
     </div>
 </template>

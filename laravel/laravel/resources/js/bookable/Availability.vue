@@ -1,14 +1,14 @@
 <template>
     <div>
         <h6 class="text-uppercase text-secondary font-weight-bolder">
-            Check Availability
-            <span v-if="noAvailability">(NOT AVAILABLE)</span>
-            <span v-if="hasAvailability">(AVAILABLE)</span>
+            予約状況確認
+            <span v-if="noAvailability">(他に予約が入っているため不可)</span>
+            <span v-if="hasAvailability">(予約可能)</span>
         </h6>
 
         <div class="form-row">
             <div class="form-group col-md-6">
-                <label for="from">From</label>
+                <label for="from">利用開始日</label>
                 <input 
                     type="text"
                     name="from"
@@ -22,7 +22,7 @@
             </div>
 
              <div class="form-group col-md-6">
-                <label for="to">To</label>
+                <label for="to">利用終了日</label>
                 <input 
                     type="text" 
                     name="to" 
@@ -37,8 +37,8 @@
         </div>
 
         <button class="btn btn-secondary btn-block" @click="check" :disabled="loading">
-            <span v-if="!loading">Check!</span>
-            <span v-if="loading"><i class="fas fa-circle-notch fa-spin"></i> Checking...</span>
+            <span v-if="!loading">空きを確認</span>
+            <span v-if="loading"><i class="fas fa-circle-notch fa-spin"></i> 確認中...</span>
         </button>
     </div>
 </template>

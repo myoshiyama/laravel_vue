@@ -1,10 +1,10 @@
 <template>
     <div>
       <nav class="navbar bg-white border-bottom navbar-light">
-        <router-link class="navbar-brand mr-auto" :to="{ name: 'home' }">LaravelBnb</router-link>
+        <router-link class="navbar-brand mr-auto" :to="{ name: 'home' }">予約システム</router-link>
 
         <router-link class="btn nav-button" :to="{name: 'basket'}">
-          Basket
+          カート
           <span v-if="itemsInBasket" class="badge badge-secondary">{{ itemsInBasket }}</span>
         </router-link>
       </nav>
@@ -23,6 +23,9 @@ export default {
     return {
       lastSearch: this.$store.state.lastSearch
     };
+  },
+  beforeCreate(){
+    this.$store.dispatch('loadStoredState')
   },
   computed: {
     ...mapState({

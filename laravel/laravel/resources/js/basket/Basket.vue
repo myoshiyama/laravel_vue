@@ -1,57 +1,10 @@
 <template>
     <div>
-        <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="first_names">First names</label>
-                        <input type="text" class="form-control" name="first_names" />
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="last_name">Last name</label>
-                        <input type="text" class="form-control" name="last_name" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="street">Street</label>
-                        <input type="text" class="form-control" name="street" />
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="city">City</label>
-                        <input type="text" class="form-control" name="city" />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="country">Country</label>
-                        <input type="text" class="form-control" name="country" />
-                    </div>
-                    <div class="col-md-4 form-group">
-                        <label for="state">State</label>
-                        <input type="text" class="form-control" name="state" />
-                    </div>
-                    <div class="col-md-2 form-group">
-                        <label for="zip">Zip</label>
-                        <input type="text" class="form-control" name="zip" />
-                    </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <button type="submit" class="btn btn-lg btn-primary btn-block">Book now!</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
+        <success v-if="success">ご予約ありがとうございます！</success>
+        <div class="row" v-else>
+           <div class="col-md-4">
                 <div class="d-flex justify-content-between">
-                    <h6 class="text-uppercase text-secondary font-weight-bolder">あなたのカート</h6>
+                    <h6 class="text-uppercase text-secondary font-weight-bolder">カートの中身</h6>
                     <h6 class="badge badge-secondary text-uppercase">
                         <span v-if="itemsInBasket">Items {{ itemsInBasket }}</span>
                         <span v-else>空</span>
@@ -66,12 +19,12 @@
                                     :to="{name: 'bookable', params: {id: item.bookable.id}}"
                                 >{{ item.bookable.title }}</router-link>
                             </span>
-                            <span class="font-weight-bold">${{ item.price.total }}</span>
+                            <span class="font-weight-bold">{{ item.price.total }}円</span>
                         </div>
 
                         <div class="pt-2 pb-2 d-flex justify-content-between">
-                            <span>From {{ item.dates.from }}</span>
-                            <span>To {{ item.dates.to }}</span>
+                            <span>利用開始日 {{ item.dates.from }}</span>
+                            <span>利用終了日 {{ item.dates.to }}</span>
                         </div>
 
                         <div class="pt-2 pb-2 text-right">
@@ -84,6 +37,18 @@
                         </div>
                     </div>
                 </transition-group>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <button 
+                            v-if="itemsInBasket" 
+                            type="submit" 
+                            lass="btn btn-lg btn-primary btn-block" 
+                            @click.prevent="book" 
+                            :disabled="loading"
+                        >予約！</button>
+                    </div>
+                </div>
                 
             </div>
         </div>
@@ -91,14 +56,50 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex';
+import Success from '../shared/components/Success.vue';
+import validationErrors from "./../shared/mixins/validationErrors";
 
 export default {
+  components: { Success },
+    mixins: [validationErrors],
+    data(){
+        return {
+            loading: false,
+            bookingAttempted: false
+        };
+    },
     computed: {
         ...mapGetters(["itemsInBasket"]),
         ...mapState({
             basket: state => state.basket.items
-        })
+        }),
+        success() {
+            return !this.loading && 0 === this.itemsInBasket && this.bookingAttempted;
+        }
+    },
+    methods: {
+        async book() {
+            this.loading = true;
+            this.bookingAttempted = false;
+            this.errors = null;
+
+            try {
+                await axios.post(`/api/checkout`, {
+                    bookings: this.basket.map(basketItem => ({
+                        bookable_id: basketItem.bookable.id,
+                        from: basketItem.dates.from,
+                        to: basketItem.dates.to
+                    }))
+                });
+                this.$store.dispatch("clearBasket");
+            } catch (error) {
+                this.errors = error.response && error.response.data.errors;
+            }
+
+            this.loading = false;
+            this.bookingAttempted = true;
+        }
     }
 };
 </script>

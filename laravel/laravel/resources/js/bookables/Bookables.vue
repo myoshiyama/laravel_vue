@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="loading">Data is loading ...</div>
+        <div v-if="loading">データ読み込み中...</div>
         <div v-else>
             <div class="row mb-4" v-for="row in rows" :key="'row' + row">
                 <div 

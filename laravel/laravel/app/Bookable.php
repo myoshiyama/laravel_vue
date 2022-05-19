@@ -24,7 +24,9 @@ class Bookable extends Model
 
     public function pricefor($from, $to): array
     {
-        $days = (new Carbon($data($from))->diffInDays(new Carbon($data($to)) + 1;
+        $fromCarbon = new Carbon($from);
+        $toCarbon = new Carbon($to);
+        $days = $fromCarbon->diffInDays($toCarbon) + 1;
         $price = $days * $this->price;
 
         return [

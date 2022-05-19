@@ -1,8 +1,8 @@
 <template>
     <div class="text-center error">
         <i class="fas fa-bomb"></i>
-        <h1 class="mt-4">We've encountered a problem</h1>
-        <h2>Unfortunately we cannot proceed</h2>
+        <h1 class="mt-4">問題が発生しました！</h1>
+        <h2>やり直してください。</h2>
     </div>
 </template>
 
