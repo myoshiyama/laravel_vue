@@ -21277,12 +21277,9 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
- // import moment from "moment";
 
 
- // import StarRating from "./shared/components/StarRating";
 
- // createApp(Top).use(router).mount('#app');
 
 var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)(_store__WEBPACK_IMPORTED_MODULE_3__["default"]);
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
@@ -21293,10 +21290,8 @@ app.use(store);
 app.component("top-view", _Top_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
 app.component("success", _shared_components_Success__WEBPACK_IMPORTED_MODULE_5__["default"]);
 app.component("fatal-error", _shared_components_FatalError__WEBPACK_IMPORTED_MODULE_4__["default"]);
-app.component("v-errors", _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__["default"]); // app.beforeCreate(store.dispatch("loadStoredState"));
-
-app.mount("#app"); // app.use("fromNow", value => moment(value).fromNow());
-// Top.component("star-rating", StarRating);
+app.component("v-errors", _shared_components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__["default"]);
+app.mount("#app");
 
 /***/ }),
 

@@ -17,8 +17,3 @@ use App\Http\Controllers\HomeController;
 Route::get('{any}', function () {
     return view('welcome');
 })->where('any','.*');
-
-// Route::get('/{any?}', function () {
-//     return view('welcome');
-// })->where('any', '^(?!api\/)[\/\w\.\,-]*');
-
