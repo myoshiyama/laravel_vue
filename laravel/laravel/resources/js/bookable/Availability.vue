@@ -77,7 +77,7 @@ export default {
                 this.$emit("availability", this.hasAvailability);
             } catch (err) {
                 if (is422(err)){
-                    this.errors = error.response.data.errors;
+                    this.errors = err.response.data.errors;
                 }
 
                 this.status = err.response.status;
