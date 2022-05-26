@@ -14,12 +14,9 @@ class BookableAvailabilityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($id, Request $request)
+    public function __invoke($id, BookableAvailabilityRequest $request)
     {
-        $data = $request->validate([
-            'from' => 'required|date_format:Y-m-d|after_or_equal:now',
-            'to' => 'required|date_format:Y-m-d|after_or_equal:from'
-        ]);
+        $data = $request->all();
 
         $bookable = Bookable::findOrFail($id);
         

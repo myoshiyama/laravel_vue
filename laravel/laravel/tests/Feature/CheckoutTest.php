@@ -18,10 +18,14 @@ class CheckoutTest extends TestCase
         
         // 「/api/check」にPOSTリクエストしてレスポンスを $response に代入
         $response = $this->post('/api/checkout', [
-            'bookable_id' => 1,
-            'from' => "2022-06-07",
-            'to' => "2022-06-07"
-        ]);
+            'bookings' => [
+              [
+                'bookable_id' => 1,
+                'from' => "2022-06-08",
+                'to' => "2022-06-08"
+              ]
+            ],
+          ]);
 
         // ステータスコードが200であることを検証
         $response->assertStatus(200);
