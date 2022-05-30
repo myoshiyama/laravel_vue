@@ -16,6 +16,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@vue/compat": "^3.2.31",
     "bootstrap-vue": "^2.21.2",
+    "flush-promises": "^1.0.2",
     "moment": "^2.29.3",
     "vue-moment": "^4.1.0",
     "vue-router": "^4.0.13",
