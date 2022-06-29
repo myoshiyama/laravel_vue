@@ -10,7 +10,7 @@
             <div class="form-group col-md-6">
                 <label for="from">利用開始日</label>
                 <input 
-                    type="text"
+                    type="date"
                     name="from"
                     class="form-control form-control-sm"
                     placeholder="Start date"
@@ -24,7 +24,7 @@
              <div class="form-group col-md-6">
                 <label for="to">利用終了日</label>
                 <input 
-                    type="text" 
+                    type="date" 
                     name="to" 
                     class="form-control form-control-sm" 
                     placeholder="End date" 
