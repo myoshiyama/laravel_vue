@@ -29,12 +29,11 @@ export default {
             reviews: null
         }
     },
-    created(){
+    async created(){
         this.loading = true;
-        axios
-            .get(`/api/bookables/${this.bookableId}/reviews`)
-            .then(response => (this.reviews = response.data.data))
-            .then(() =>(this.loading = false));
+        const response = await axios.get(`/api/bookables/${this.bookableId}/reviews`);
+        this.reviews = response.data.data;
+        this.loading = false
     },
     methods: {
         fromNow(value) {
