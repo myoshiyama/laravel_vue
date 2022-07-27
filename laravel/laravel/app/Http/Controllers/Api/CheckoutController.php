@@ -18,6 +18,7 @@ class CheckoutController extends Controller
 
         $bookingsData = $data['bookings'];
 
+        $records = [];
         $bookings = collect($bookingsData)->map(function ($bookingData) {
             $bookable = Bookable::findOrFail($bookingData['bookable_id']);
             $booking = new Booking();
@@ -26,9 +27,11 @@ class CheckoutController extends Controller
             $booking->price = $bookable->priceFor($booking->from, $booking->to)['total'];
             $booking->bookable() -> associate($bookable);
 
+            $records[] = $booking;
             return $booking;
         });
 
-        Booking::insert($bookings);
+        Booking::insert($records);
+        return $bookings;
     }
 }
