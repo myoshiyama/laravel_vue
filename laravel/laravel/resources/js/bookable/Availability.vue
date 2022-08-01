@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { is422 } from "./../shared/utils/response";
+import { is422, is500 } from "./../shared/utils/response";
 import validationErrors from "./../shared/mixins/validationErrors";
 
 export default {
@@ -76,7 +76,17 @@ export default {
                 )).status;
                 this.$emit("availability", this.hasAvailability);
             } catch (err) {
+                let isUnknownErr = true;
+
                 if (is422(err)){
+                    this.errors = err.response.data.errors;
+                    isUnknownErr = false;
+                }
+                if (is500(err)){
+                    this.errors = err.response.data.errors;
+                    isUnknownErr = false;
+                }
+                if (isUnknownErr){
                     this.errors = err.response.data.errors;
                 }
 
