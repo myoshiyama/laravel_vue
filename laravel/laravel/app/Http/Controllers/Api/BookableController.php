@@ -13,7 +13,7 @@ class BookableController extends Controller
     public function index()
     {
         return BookableIndexResource::collection(
-            Bookable::all()
+            Bookable::paginate(20)
         );
     }
 
