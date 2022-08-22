@@ -17619,6 +17619,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var isUnknownErr;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -17640,14 +17641,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$emit("availability", _this.hasAvailability);
 
-                _context.next = 15;
+                _context.next = 18;
                 break;
 
               case 10:
                 _context.prev = 10;
                 _context.t0 = _context["catch"](3);
+                isUnknownErr = true;
 
                 if ((0,_shared_utils_response__WEBPACK_IMPORTED_MODULE_1__.is422)(_context.t0)) {
+                  _this.errors = _context.t0.response.data.errors;
+                  isUnknownErr = false;
+                }
+
+                if ((0,_shared_utils_response__WEBPACK_IMPORTED_MODULE_1__.is500)(_context.t0)) {
+                  _this.errors = _context.t0.response.data.errors;
+                  isUnknownErr = false;
+                }
+
+                if (isUnknownErr) {
                   _this.errors = _context.t0.response.data.errors;
                 }
 
@@ -17655,10 +17667,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 _this.$emit("availability", _this.hasAvailability);
 
-              case 15:
+              case 18:
                 _this.loading = false;
 
-              case 16:
+              case 19:
               case "end":
                 return _context.stop();
             }
@@ -17931,12 +17943,35 @@ __webpack_require__.r(__webpack_exports__);
     return {
       bookables: null,
       loading: false,
-      columns: 3
+      columns: 3,
+      meta: null
     };
   },
   computed: {
     rows: function rows() {
       return this.bookables === null ? 0 : Math.ceil(this.bookables.length / this.columns);
+    },
+    pageNums: function pageNums() {
+      var currPage = this.meta.current_page;
+      var lastPage = this.meta.last_page;
+      var sequentialNumsLen = Math.min(10, lastPage);
+      var sequentialNums = new Array(sequentialNumsLen).fill(0).map(function (_, idx) {
+        return idx + 1;
+      });
+
+      if (lastPage < 10 || currPage <= 5) {
+        return sequentialNums;
+      }
+
+      if (lastPage - 4 <= currPage) {
+        return sequentialNums.map(function (_, idx) {
+          return lastPage - 9 + idx;
+        });
+      }
+
+      return sequentialNums.map(function (_, idx) {
+        return currPage - 5 + idx;
+      });
     }
   },
   methods: {
@@ -17945,16 +17980,26 @@ __webpack_require__.r(__webpack_exports__);
     },
     placeholdersInRow: function placeholdersInRow(row) {
       return this.columns - this.bookablesInRow(row).length;
+    },
+    loadBookables: function loadBookables(pageNum) {
+      var _this = this;
+
+      this.loading = true;
+      var apiUrl = '/api/bookables';
+
+      if (pageNum !== undefined) {
+        apiUrl += "?page=".concat(pageNum);
+      }
+
+      var request = axios.get(apiUrl).then(function (response) {
+        _this.bookables = response.data.data;
+        _this.loading = false;
+        _this.meta = response.data.meta;
+      });
     }
   },
   created: function created() {
-    var _this = this;
-
-    this.loading = true;
-    var request = axios.get("/api/bookables").then(function (response) {
-      _this.bookables = response.data.data;
-      _this.loading = false;
-    });
+    this.loadBookables();
   }
 });
 
@@ -18695,6 +18740,10 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   key: 1
 };
+var _hoisted_3 = {
+  "class": "text-center"
+};
+var _hoisted_4 = ["onClick"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_bookable_list_item = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("bookable-list-item");
 
@@ -18721,7 +18770,47 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     ))]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]))]);
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    role: "button",
+    "class": "d-inline-block px-2",
+    onClick: _cache[0] || (_cache[0] = function ($event) {
+      return $options.loadBookables();
+    })
+  }, "最初"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    role: "button",
+    "class": "d-inline-block px-2",
+    onClick: _cache[1] || (_cache[1] = function ($event) {
+      return $options.loadBookables(Math.max($data.meta.current_page - 1, 1));
+    })
+  }, "前へ"), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pageNums, function (pageNum, idx) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+      key: idx
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+      onClick: function onClick($event) {
+        return $options.loadBookables(pageNum);
+      },
+      role: "button",
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([{
+        'font-weight-bolder': pageNum === $data.meta.current_page
+      }, "d-inline-block px-2"])
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(pageNum), 11
+    /* TEXT, CLASS, PROPS */
+    , _hoisted_4)]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    role: "button",
+    "class": "d-inline-block px-2",
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.loadBookables(Math.min($data.meta.current_page + 1, $data.meta.last_page));
+    })
+  }, "次へ"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    role: "button",
+    "class": "d-inline-block px-2",
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return $options.loadBookables($data.meta.last_page);
+    })
+  }, "最後")])]))]);
 }
 
 /***/ }),
@@ -18946,13 +19035,17 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "is404": () => (/* binding */ is404),
-/* harmony export */   "is422": () => (/* binding */ is422)
+/* harmony export */   "is422": () => (/* binding */ is422),
+/* harmony export */   "is500": () => (/* binding */ is500)
 /* harmony export */ });
 var is404 = function is404(err) {
   return isErrorWithResponseAndStatus(err) && 404 === err.response.status;
 };
 var is422 = function is422(err) {
   return isErrorWithResponseAndStatus(err) && 422 === err.response.status;
+};
+var is500 = function is500(err) {
+  return isErrorWithResponseAndStatus(err) && 500 === err.response.status;
 };
 
 var isErrorWithResponseAndStatus = function isErrorWithResponseAndStatus(err) {
