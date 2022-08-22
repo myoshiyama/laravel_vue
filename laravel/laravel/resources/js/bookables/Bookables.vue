@@ -17,7 +17,7 @@
             <div class="text-center">
                 <span role="button" class="d-inline-block px-2" @click="loadBookables()">最初</span>
                 <span role="button" class="d-inline-block px-2" @click="loadBookables(Math.max(meta.current_page - 1, 1))">前へ</span>
-                <span v-for="pageNum in pageNums">
+                <span v-for="(pageNum, idx) in pageNums" :key="idx">
                     <span
                         @click="loadBookables(pageNum)"
                         role="button"
