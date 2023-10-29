@@ -7,6 +7,7 @@ use App\Http\Resources\ReviewResource;
 use App\Review;
 use App\Booking;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReviewController extends Controller
 {
@@ -17,26 +18,33 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'id' => 'required|size:36|unique:reviews',
-            'content' => 'required|min:2',
-            'rating' => 'required|in:1,2,3,4,5'
-        ]);
+        DB::beginTransaction();
+        try {
+            $data = $request->validate([
+                'id' => 'required|size:36|unique:reviews',
+                'content' => 'required|min:2',
+                'rating' => 'required|in:1,2,3,4,5'
+            ]);
+    
+            $booking = Booking::findByReviewKey($data['id']);
+    
+            if(null === $booking){
+                return abort(404);
+            }
+    
+            $booking->review_key = '';
+            $booking->save();
+    
+            $review = Review::make($data);
+            $review->booking_id = $booking->id;
+            $review->bookable_id = $booking->bookable_id;
+            $review->save();
 
-        $booking = Booking::findByReviewKey($data['id']);
+            DB::commit();
 
-        if(null === $booking){
-            return abort(404);
+            return new ReviewResource($review);
+        } catch (Exception $e) {
+            DB::rollBack();
         }
-
-        $booking->review_key = '';
-        $booking->save();
-
-        $review = Review::make($data);
-        $review->booking_id = $booking->id;
-        $review->bookable_id = $booking->bookable_id;
-        $review->save();
-
-        return new ReviewResource($review);
     }
 }
