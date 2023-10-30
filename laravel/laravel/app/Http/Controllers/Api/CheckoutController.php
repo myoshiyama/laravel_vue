@@ -9,12 +9,14 @@ use App\Bookable;
 use App\Booking;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
     public function __invoke(CheckoutRequest $request)
     {
         $data = $request->all();
+        Log::info($data);
 
         $bookingsData = $data['bookings'];
 
@@ -26,6 +28,11 @@ class CheckoutController extends Controller
             $booking->price = $bookable->priceFor($booking->from, $booking->to)['total'];
             $booking->bookable_id = $bookingData['bookable_id'];
             $booking->review_key = Str::uuid();
+            $booking->created_at = $bookingData['created_at'];
+            $booking->updated_at = $bookingData['updated_at'];
+
+
+            Log::info($booking);
 
             return $booking;
         });

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Bookable;
+use DateTime;
 
 class CheckoutRequest extends FormRequest
 {
@@ -28,5 +29,23 @@ class CheckoutRequest extends FormRequest
                 }
             }]
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $bookings = $this->input('bookings');
+
+            if ($bookings && is_array($bookings)) {
+                $now = now()->toDateTimeString();
+
+                foreach ($bookings as &$booking) {
+                    $booking['created_at'] = $now;
+                    $booking['updated_at'] = $now;
+                }
+
+                $this->merge(['bookings' => $bookings]);
+            }
+        });
     }
 }

@@ -39,4 +39,9 @@ class Booking extends Model
             $booking->review_key = Str::uuid();
         });
     }
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }
