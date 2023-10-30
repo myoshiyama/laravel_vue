@@ -15,7 +15,7 @@ function createRootElem() {
   return elem;
 }
 
-test('Availability.vue', function () {
+test('Availability.vue', async function () {
   const elem = createRootElem();
 
   const wrapper = mount(Availability, {
@@ -30,12 +30,21 @@ test('Availability.vue', function () {
     },
   });
 
-  wrapper.vm.$nextTick(async function () {
+  try {
+    await wrapper.vm.$nextTick();
     await flushPromises();
 
-    // 画面に「予約状況確認」というテキストが含まれているかを検証
     expect(wrapper.text()).toContain('予約状況確認');
+  } catch (error) {
+    fail(`エラーが発生しました: ${error.message}`);
+  }
 
-    done();
-  })
+  // wrapper.vm.$nextTick(async function () {
+  //   await flushPromises();
+
+  //   // 画面に「予約状況確認」というテキストが含まれているかを検証
+  //   expect(wrapper.text()).toContain('予約状況確認');
+
+  //   done();
+  // })
 });
