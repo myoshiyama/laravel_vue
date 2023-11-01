@@ -11,9 +11,13 @@
             <span>{{ days * price }}円</span>
         </div>
 
-        <div class="pt-2 font-weight-bolder d-flex justify-content-between">
+        <div v-if="price" class="pt-2 font-weight-bolder d-flex justify-content-between">
             <span>合計</span>
             <span>{{ price.total }}円</span>
+        </div>
+
+        <div v-if="!price" class="text-danger font-weight-bolder">
+            エラー: 金額内訳が取得できません。
         </div>
     </div>
 </template>
