@@ -1,12 +1,5 @@
 import { mount } from '@vue/test-utils';
 import flushPromises from 'flush-promises';
-
-window.axios = require('axios');
-
-import $route from '../../routes';
-import { createStore } from 'vuex'
-import storeDefinition from '../../store';
-const $store = createStore(storeDefinition);
 import PriceBreakdown from '../../bookable/PriceBreakdown.vue';
 
 function createRootElem() {
@@ -15,27 +8,47 @@ function createRootElem() {
   return elem;
 }
 
-test('PriceBreakdown.vue', function () {
-  const elem = createRootElem();
+describe('PriceBreakdown.vue', () => {
+  it('renders price breakdown', async () => {
+    const elem = createRootElem();
 
-  const wrapper = mount(PriceBreakdown, {
-    attachTo: elem,
-    mocks: {},
-    stubs: {},
-    global: {
-      plugins: [
-        $store,
-        $route,
-      ],
-    },
-  });
+    const wrapper = mount(PriceBreakdown, {
+      attachTo: elem,
+      props: {
+        price: {
+          breakdown: { '1': 100, '2': 150 },
+          total: 250
+        }
+      }
+    });
 
-  wrapper.vm.$nextTick(async function () {
     await flushPromises();
 
-    // 画面に「金額内訳」というテキストが含まれているかを検証
+    // テキスト内に特定の文字列が含まれていることを確認
     expect(wrapper.text()).toContain('金額内訳');
+    expect(wrapper.text()).toContain('100 x 1円');
+    expect(wrapper.text()).toContain('150 x 2円');
+    expect(wrapper.text()).toContain('合計250円');
 
-    done();
-  })
+  });
+
+  it('handles error when price data is missing', async () => {
+    const elem = createRootElem();
+
+    const wrapper = mount(PriceBreakdown, {
+      attachTo: elem,
+      props: {
+        price: undefined
+      }
+    });
+
+    await flushPromises();
+
+    // エラーメッセージが表示されることを確認
+    expect(wrapper.text()).toContain('エラー: 金額データがありません');
+
+    // エラーメッセージが正しいことを確認
+    expect(wrapper.text()).toContain('金額データがありません');
+  });
 });
+

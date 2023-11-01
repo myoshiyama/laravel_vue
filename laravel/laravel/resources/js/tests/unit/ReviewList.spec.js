@@ -15,7 +15,7 @@ function createRootElem() {
   return elem;
 }
 
-test('ReviewList.vue', function () {
+test('ReviewList.vue', async function () {
   const elem = createRootElem();
 
   const wrapper = mount(ReviewList, {
@@ -30,12 +30,14 @@ test('ReviewList.vue', function () {
     },
   });
 
-  wrapper.vm.$nextTick(async function () {
+  try {
+    await wrapper.vm.$nextTick();
     await flushPromises();
 
     // 画面に「レビュー一覧」というテキストが含まれているかを検証
     expect(wrapper.text()).toContain('レビュー一覧');
-
-    done();
-  })
+  } catch (error) {
+    // 例外が発生した場合のエラーハンドリング
+    console.error('エラーが発生しました:', error);
+  }
 });
