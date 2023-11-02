@@ -40,7 +40,7 @@ test('Bookable.vue', async () => {
     },
   });
 
-  app.vm.$axios = axios.create();
+  // app.vm.$axios = axios.create();
 
   await router.isReady(); // ルーターが初期化されるのを待つ
 

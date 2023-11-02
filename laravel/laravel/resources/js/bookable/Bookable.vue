@@ -3,7 +3,7 @@
         <div class="col-md-8 pb-4">
             <div class="card">
                 <div class="card-body">
-                    <div v-if="!loading">
+                    <div v-if="!loading && bookable">
                         <h2>{{ bookable.title }}</h2>
                         <hr />
                         <article>{{ bookable.description }}</article>
@@ -65,7 +65,7 @@ export default {
     },
     data(){
         return {
-            bookable: null,
+            bookable: { title: '' },
             loading: false,
             price: null
         };
