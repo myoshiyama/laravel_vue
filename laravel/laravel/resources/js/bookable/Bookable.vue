@@ -15,9 +15,9 @@
             <review-list :bookable-id="this.$route.params.id"></review-list>
         </div>
         <div class="col-md-4 pb-4">
-            <availability 
-                :bookable-id="this.$route.params.id" 
-                @availability="checkPrice($event)" 
+            <availability
+                :bookable-id="this.$route.params.id"
+                @availability="checkPrice($event)"
                 class="mb-4"
             ></availability>
 
@@ -26,19 +26,19 @@
             </transition>
 
             <transition name="fade">
-                <button 
-                    key="huge" 
-                    class="btn btn-outline-secondary btn-block" 
-                    v-if="price" 
-                    @click="addToBasket" 
+                <button
+                    key="huge"
+                    class="btn btn-outline-secondary btn-block"
+                    v-if="price"
+                    @click="addToBasket"
                     :disabled="inBasketAlready"
                 >カートに入れる</button>
             </transition>
 
-            <button 
-                key="hoge" 
-                class="btn btn-outline-secondary btn-block" 
-                v-if="inBasketAlready" 
+            <button
+                key="hoge"
+                class="btn btn-outline-secondary btn-block"
+                v-if="inBasketAlready"
                 @click="removeFromBasket"
             >カートから出す</button>
 
@@ -55,6 +55,7 @@ import Availability from "./Availability";
 import ReviewList from "./ReviewList";
 import PriceBreakdown from "./PriceBreakdown";
 import { mapState } from 'vuex';
+import axios from 'axios';
 
 export default {
     components: {
@@ -72,8 +73,13 @@ export default {
     created() {
         this.loading = true;
         axios.get(`/api/bookables/${this.$route.params.id}`).then(response => {
+            console.log(response.data.data);
             this.bookable = response.data.data;
             this.loading = false;
+        })
+        .catch(error => {
+            this.loading = false; // エラー時も loading を false に設定
+            console.error('データの読み込みエラー', error);
         });
     },
     computed: {
