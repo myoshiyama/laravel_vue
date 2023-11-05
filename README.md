@@ -1,2 +1,2 @@
 # laravel_vue
-https://agile-scrubland-13086.herokuapp.com/
+https://laravel-heroku-app-fa8b76e995f6.herokuapp.com/
