@@ -15,7 +15,7 @@ function createRootElem() {
   return elem;
 }
 
-test('ReviewList.vue', async function () {
+test('"レビュー一覧"が正しく表示されるか', async function () {
   const elem = createRootElem();
 
   const wrapper = mount(ReviewList, {
@@ -30,14 +30,32 @@ test('ReviewList.vue', async function () {
     },
   });
 
-  try {
-    await wrapper.vm.$nextTick();
-    await flushPromises();
+  await wrapper.vm.$nextTick();
+  await flushPromises();
 
-    // 画面に「レビュー一覧」というテキストが含まれているかを検証
-    expect(wrapper.text()).toContain('レビュー一覧');
-  } catch (error) {
-    // 例外が発生した場合のエラーハンドリング
-    console.error('エラーが発生しました:', error);
-  }
+  expect(wrapper.text()).toContain('レビュー一覧');
+});
+
+const elem = null;
+const wrapper = null;
+
+test('例外テスト："エラーテスト"が表示されないか', async function () {
+  const elem = createRootElem();
+
+  const wrapper = mount(ReviewList, {
+    attachTo: elem,
+    mocks: {},
+    stubs: {},
+    global: {
+      plugins: [
+        $store,
+        $route,
+      ],
+    },
+  });
+
+  await wrapper.vm.$nextTick();
+  await flushPromises();
+
+  expect(wrapper.text()).not.toContain('エラーテスト');
 });

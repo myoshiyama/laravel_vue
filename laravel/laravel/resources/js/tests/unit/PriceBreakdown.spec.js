@@ -9,7 +9,7 @@ function createRootElem() {
 }
 
 describe('PriceBreakdown.vue', () => {
-  it('renders price breakdown', async () => {
+  test('正しい価格の内訳を表示OK', async () => {
     const elem = createRootElem();
 
     const wrapper = mount(PriceBreakdown, {
@@ -32,7 +32,7 @@ describe('PriceBreakdown.vue', () => {
 
   });
 
-  it('handles error when price data is missing', async () => {
+  test('価格データ欠落テスト', async () => {
     const elem = createRootElem();
 
     const wrapper = mount(PriceBreakdown, {
@@ -45,10 +45,7 @@ describe('PriceBreakdown.vue', () => {
     await flushPromises();
 
     // エラーメッセージが表示されることを確認
-    expect(wrapper.text()).toContain('エラー: 金額データがありません');
-
-    // エラーメッセージが正しいことを確認
-    expect(wrapper.text()).toContain('金額データがありません');
+    expect(wrapper.text()).toContain('エラー: 金額内訳が取得できません');
   });
 });
 

@@ -13,7 +13,7 @@ const vErrorsStub = {
   template: '<div></div>',
 };
 
-test('Bookable.vue', async () => {
+const createApp = async (textToCheck) => {
   const router = createRouter({
     history: createWebHistory(),
     routes,
@@ -40,13 +40,20 @@ test('Bookable.vue', async () => {
   });
 
   await router.isReady();
+  await app.vm.$nextTick();
+  await flushPromises();
 
-  try {
-    await app.vm.$nextTick();
-    await flushPromises();
-
-    expect(app.text()).toContain('杉山市 小部屋');
-  } catch (error) {
-    expect(error).toBeUndefined();
+  if (textToCheck === 'エラーテスト') {
+    expect(app.text()).not.toContain(textToCheck);
+  } else {
+    expect(app.text()).toContain(textToCheck);
   }
+};
+
+test('杉山市 小部屋 が表示されるか', async () => {
+  await createApp('杉山市 小部屋');
+});
+
+test('例外テスト：エラーテスト が表示されるか', async () => {
+  await createApp('エラーテスト');
 });

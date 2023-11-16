@@ -4,19 +4,13 @@ import flushPromises from 'flush-promises';
 window.axios = require('axios');
 
 import $route from '../../routes';
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
 import storeDefinition from '../../store';
-const $store = createStore(storeDefinition);
 import Availability from '../../bookable/Availability.vue';
 
-function createRootElem() {
+function createWrapper() {
   const elem = document.createElement('div');
   elem.id = 'app';
-  return elem;
-}
-
-test('Availability.vue', async function () {
-  const elem = createRootElem();
 
   const wrapper = mount(Availability, {
     attachTo: elem,
@@ -24,27 +18,29 @@ test('Availability.vue', async function () {
     stubs: {},
     global: {
       plugins: [
-        $store,
+        createStore(storeDefinition),
         $route,
       ],
     },
   });
 
-  try {
-    await wrapper.vm.$nextTick();
-    await flushPromises();
+  return { elem, wrapper };
+}
 
-    expect(wrapper.text()).toContain('予約状況確認');
-  } catch (error) {
-    fail(`エラーが発生しました: ${error.message}`);
-  }
+test('"予約状況確認" を確認', async () => {
+  const { wrapper } = createWrapper();
 
-  // wrapper.vm.$nextTick(async function () {
-  //   await flushPromises();
+  await wrapper.vm.$nextTick();
+  await flushPromises();
 
-  //   // 画面に「予約状況確認」というテキストが含まれているかを検証
-  //   expect(wrapper.text()).toContain('予約状況確認');
+  expect(wrapper.text()).toContain('予約状況確認');
+});
 
-  //   done();
-  // })
+test('"エラーテスト"が無いことを確認', async () => {
+  const { wrapper } = createWrapper();
+
+  await wrapper.vm.$nextTick();
+  await flushPromises();
+
+  expect(wrapper.text()).not.toContain('エラーテスト');
 });
