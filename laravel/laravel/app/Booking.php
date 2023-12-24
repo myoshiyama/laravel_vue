@@ -36,7 +36,9 @@ class Booking extends Model
         parent::boot();
 
         static::creating(function($booking){
-            $booking->review_key = Str::uuid();
+            if (empty($booking->review_key)) {
+                $booking->review_key = Str::uuid();
+            }
         });
     }
 

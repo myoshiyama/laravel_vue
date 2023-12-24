@@ -4,6 +4,7 @@
 
 use App\Bookable;
 use Faker\Generator as Faker;
+use Illuminate\Support\Arr;
 
 $suffix = [
     'ホテル',

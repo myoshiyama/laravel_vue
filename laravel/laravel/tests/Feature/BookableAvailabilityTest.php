@@ -5,28 +5,40 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Bookable;
 
 class BookableAvailabilityTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
-     * 「GET /api/bookables/○/availability」のテスト
+     * @return void
      */
+    public function testAvailabilityCheckSuccess()
+    {
+        $bookable = factory(Bookable::class)->create();
 
-    // 「/api/bookables/1/availability"日付の条件"」にGETリクエストしてレスポンスを $response に代入
+        $response = $this->json('GET', '/api/bookables/' . $bookable->id . '/availability', [
+            'from' => '2024-01-01',
+            'to' => '2024-01-05'
+        ]);
 
-    //OKパターン
-    public function testBookableAvailabilityOk(){
-        $response = $this->json('get', '/api/bookables/1/availability?from=2022-06-20&to=2022-06-20');
-
-        // ステータスコードが200であることを検証
         $response->assertStatus(200);
+        $response->assertJson([]);
     }
 
-    //NHパターン
-    public function testBookableAvailabilityNg(){
-        $response = $this->json('get', '/api/bookables/1/availability?from=2022-06-18&to=2022-06-18');
+    /**
+     * @return void
+     */
+    public function testAvailabilityCheckFailure()
+    {
+        $bookable = factory(Bookable::class)->create();
 
-        // ステータスコードが200であることを検証
-        $response->assertStatus(200);
+        $response = $this->json('GET', '/api/bookables/' . $bookable->id . '/availability', [
+            'from' => '2020-01-10',
+            'to' => '2020-01-15'
+        ]);
+
+        $response->assertStatus(422);
     }
 }

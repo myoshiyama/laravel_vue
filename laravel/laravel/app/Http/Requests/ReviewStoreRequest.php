@@ -24,11 +24,10 @@ class ReviewStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|size:36|unique:reviews',
+            'id' => 'required|max:36',
+            // 'id' => 'required|max:36|unique:bookings,review_key',
             'content' => 'required|min:2',
             'rating' => 'required|in:1,2,3,4,5',
-            'from' => 'required|date_format:Y-m-d',
-            'to' => 'required|date_format:Y-m-d|after_or_equal:from',
         ];
     }
 }

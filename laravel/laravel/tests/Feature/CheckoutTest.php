@@ -5,29 +5,47 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Bookable;
+use App\Booking;
+use Database\Factories\BookableFactory;
 
 class CheckoutTest extends TestCase
 {
-    /**
-     * 「GET /api/check」のテスト
-     */
+    use RefreshDatabase;
 
-    // use RefreshDatabase;
-    
-    public function testCheckout(){
-        
-        // 「/api/check」にPOSTリクエストしてレスポンスを $response に代入
-        $response = $this->post('/api/checkout', [
+    public function testCheckoutSuccess()
+    {
+        $bookable = factory(Bookable::class)->create();
+
+        $response = $this->postJson('/api/checkout', [
             'bookings' => [
-              [
-                'bookable_id' => 1,
-                'from' => "2022-06-08",
-                'to' => "2022-06-08"
-              ]
+                [
+                    'bookable_id' => $bookable->id,
+                    'from' => '2024-01-01',
+                    'to' => '2024-01-05',
+                ],
             ],
-          ]);
+        ]);
 
-        // ステータスコードが200であることを検証
         $response->assertStatus(200);
+        $this->assertCount(1, Booking::all());
+    }
+
+    public function testCheckoutFailure()
+    {
+      $bookable = factory(Bookable::class)->create();
+
+        $response = $this->postJson('/api/checkout', [
+            'bookings' => [
+                [
+                    'bookable_id' => $bookable->id,
+                    'from' => '2023-01-01',
+                    'to' => '2023-01-05',
+                ],
+            ],
+        ]);
+
+        $response->assertStatus(422);
+        $this->assertCount(0, Booking::all());
     }
 }

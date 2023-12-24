@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReviewResource;
+use App\Http\Requests\ReviewStoreRequest;
 use App\Review;
 use App\Booking;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ReviewController extends Controller
 {
@@ -16,16 +17,20 @@ class ReviewController extends Controller
         return new ReviewResource(Review::findOrFail($id));
     }
 
-    public function store(Request $request)
+    public function store(ReviewStoreRequest $request)
     {
         DB::beginTransaction();
         try {
             $data = $request->validated();
 
+            if (!isset($data['id'])) {
+                abort(404, 'Review key not provided');
+            }
+
             $booking = Booking::findByReviewKey($data['id']);
 
-            if(null === $booking){
-                return abort(404);
+            if (null === $booking) {
+                abort(404, 'Booking not found');
             }
 
             $booking->review_key = '';
@@ -38,9 +43,10 @@ class ReviewController extends Controller
 
             DB::commit();
 
-            return new ReviewResource($review);
+            return (new ReviewResource($review))->response()->setStatusCode(201);
         } catch (Exception $e) {
             DB::rollBack();
+            throw $e;
         }
     }
 }
