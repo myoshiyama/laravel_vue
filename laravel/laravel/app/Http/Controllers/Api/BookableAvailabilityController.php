@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookableAvailabilityRequest;
 use Illuminate\Http\Request;
 use App\Bookable;
+use RuntimeException;
 
 class BookableAvailabilityController extends Controller
 {
@@ -19,10 +20,15 @@ class BookableAvailabilityController extends Controller
     {
         $data = $request->all();
 
-        $bookable = Bookable::findOrFail($id);
+        try {
+            $bookable = Bookable::findOrFail($id);
 
-        return $bookable->availableFor($data['from'], $data['to'])
-            ? response()->json([])
-            : response()->json([], 404);
+            return $bookable->availableFor($data['from'], $data['to'])
+                ? response()->json([])
+                : response()->json([], 404);
+        } catch (RuntimeException $e) {
+            // 500系のエラーをキャッチ
+            return response()->json(['message' => 'サーバーエラーが発生しました。'], 500);
+        }
     }
 }

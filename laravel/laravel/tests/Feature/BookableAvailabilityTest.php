@@ -6,14 +6,13 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Bookable;
+use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
 class BookableAvailabilityTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * @return void
-     */
     public function testAvailabilityCheckSuccess()
     {
         $bookable = factory(Bookable::class)->create();
@@ -30,7 +29,7 @@ class BookableAvailabilityTest extends TestCase
     /**
      * @return void
      */
-    public function testAvailabilityCheckFailure()
+    public function testAvailabilityCheck400Failure()
     {
         $bookable = factory(Bookable::class)->create();
 
@@ -40,5 +39,26 @@ class BookableAvailabilityTest extends TestCase
         ]);
 
         $response->assertStatus(422);
+    }
+
+    public function testAvailabilityCheck500Failure()
+    {
+        $bookableId = 1; // テスト用
+
+        $bookableMock = $this->mock(Bookable::class);
+        $bookableMock->shouldReceive('findOrFail')
+                    ->with($bookableId)
+                    ->andReturnSelf();
+
+        $bookableMock->shouldReceive('availableFor')
+                    ->andThrow(new RuntimeException('サーバーダウン'));
+
+        $response = $this->json('GET', '/api/bookables/' . $bookableId . '/availability', [
+            'from' => '2024-01-01',
+            'to' => '2024-01-05'
+        ]);
+
+        // 500系エラーが返ってくることを確認
+        $response->assertStatus(500);
     }
 }

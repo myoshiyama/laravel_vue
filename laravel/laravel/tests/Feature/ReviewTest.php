@@ -9,6 +9,8 @@ use App\Review;
 use App\Booking;
 use App\Bookable;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class ReviewTest extends TestCase
 {
@@ -68,7 +70,7 @@ class ReviewTest extends TestCase
         ]);
     }
 
-    public function testReviewStoreWithInvalidReviewKey()
+    public function testReviewStore400Failure()
     {
         $data = [
             'id' => 'invalid-review-key',
@@ -79,5 +81,26 @@ class ReviewTest extends TestCase
         $response = $this->postJson('/api/reviews', $data);
 
         $response->assertStatus(404);
+    }
+
+    public function testReviewStore500Failure()
+    {
+        DB::shouldReceive('beginTransaction')->once()->andThrow(new Exception('サーバーエラー'));
+
+        $bookable = factory(Bookable::class)->create();
+        $booking = factory(Booking::class)->create([
+            'bookable_id' => $bookable->id,
+            'review_key' => 'testkey'
+        ]);
+        $data = [
+            'id' => $booking->review_key,
+            'content' => 'テストレビューです',
+            'rating' => 5,
+        ];
+
+        $response = $this->postJson('/api/reviews', $data);
+
+        // 500系エラーが返ってくることを確認
+        $response->assertStatus(500);
     }
 }

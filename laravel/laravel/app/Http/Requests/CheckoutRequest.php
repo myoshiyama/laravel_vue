@@ -23,7 +23,7 @@ class CheckoutRequest extends FormRequest
 
             'bookings.*' => ['required', function ($attribute, $value, $fail){
                 $bookable = Bookable::findOrFail($value['bookable_id']);
-    
+
                 if (!$bookable->availableFor($value['from'], $value['to'])){
                     $fail("The object is not available in given dates!");
                 }

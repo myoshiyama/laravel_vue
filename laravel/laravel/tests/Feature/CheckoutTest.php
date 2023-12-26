@@ -7,7 +7,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Bookable;
 use App\Booking;
-use Database\Factories\BookableFactory;
+use RuntimeException;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Query\Builder;
 
 class CheckoutTest extends TestCase
 {
@@ -31,7 +33,7 @@ class CheckoutTest extends TestCase
         $this->assertCount(1, Booking::all());
     }
 
-    public function testCheckoutFailure()
+    public function testCheckout400Failure()
     {
       $bookable = factory(Bookable::class)->create();
 
@@ -47,5 +49,26 @@ class CheckoutTest extends TestCase
 
         $response->assertStatus(422);
         $this->assertCount(0, Booking::all());
+    }
+
+    public function testCheckout500Failure()
+    {
+        $bookable = factory(Bookable::class)->create();
+
+        // DBモック
+        DB::partialMock()->shouldReceive('table->insert')
+            ->andThrow(new RuntimeException('サーバーダウン'));
+
+        $response = $this->postJson('/api/checkout', [
+            'bookings' => [
+                [
+                    'bookable_id' => $bookable->id,
+                    'from' => '2024-01-01',
+                    'to' => '2024-01-05',
+                ],
+            ],
+        ]);
+
+        $response->assertStatus(500);
     }
 }

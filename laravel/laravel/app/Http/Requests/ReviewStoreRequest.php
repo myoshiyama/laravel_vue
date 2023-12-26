@@ -25,7 +25,6 @@ class ReviewStoreRequest extends FormRequest
     {
         return [
             'id' => 'required|max:36',
-            // 'id' => 'required|max:36|unique:bookings,review_key',
             'content' => 'required|min:2',
             'rating' => 'required|in:1,2,3,4,5',
         ];
